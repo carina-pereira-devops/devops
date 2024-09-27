@@ -72,7 +72,7 @@ Pipe Iac criando ArgoCd e Jaeger
 Pipe da Aplicação
 
 6 - ArgoCD  (Falta)
-Configuração e Deploy da Aplicação
+Configuração e Deploy da Aplicação feita manualmente.
 
 8 - Metricas/Jaeger (Entrega cancelada)
 Métricas
