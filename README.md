@@ -78,3 +78,4 @@ Configuração e Deploy da Aplicação
 Métricas
 
 9 - Futuras funcionalidades:
+Botões de Pipes Automatizados.
