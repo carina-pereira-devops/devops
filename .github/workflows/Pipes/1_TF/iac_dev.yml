@@ -1,0 +1,5 @@
+# Simulando a replicação da mesma estrutura de PRD para HML DEV  ...
+
+# Respectivas Configurações e Variáveis para cada um dos ambientes, com reutilização do código, de acordo com os objetivos da IaC.
+
+# Na criação de recursos em um mesmo ambiente o terraform armazena o que está operacional de acordo com o 'state file' terraform.tfstate.

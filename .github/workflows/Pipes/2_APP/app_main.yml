@@ -1,0 +1,70 @@
+name: CRIA A IMAGEM E ATUALIZA A TAG
+on:
+    push:
+        branches:
+            - master
+permissions:
+  id-token: write
+  deployments: write
+  contents: write
+  statuses: write
+  actions: write
+  checks: read
+        
+jobs:
+    Build:
+      name: Build
+      runs-on: ubuntu-latest
+      
+      env:
+          ECR_REGISTRY: "535002861869.dkr.ecr.us-east-1.amazonaws.com" #${{ secrets.URL_AWS }}
+          ECR_REPOSITORY: "dvps" #${{ secrets.REPO_NAME }}
+          
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+
+          ## CHECKOUT seu propósito é clonar o repositório atual (o mesmo onde o workflow está sendo executado) no ambiente de execução da pipeline. Isso permite que as etapas seguintes tenham acesso ao código-fonte e aos arquivos do repositório.
+        
+        - name: Set IMAGE_TAG with current timestamp
+          id: set_image_tag
+          run: echo "IMAGE_TAG=$(date +%Y%m%d%H%M%S)" >> $GITHUB_ENV
+          
+        - name: Configure AWS credentials
+          uses: aws-actions/configure-aws-credentials@v4 #uses: aws-actions/configure-aws-credentials@v1
+          with:
+            role-to-assume:  "arn:aws:iam::535002861869:role/github-carina-devops-pipe"
+            aws-region: "us-east-1"
+       
+                    
+        - name: Login to Amazon ECR
+          id: login-ecr
+          uses: aws-actions/amazon-ecr-login@v1
+
+        - name: Create ECR repository if it doesn't exist
+          run: |
+            aws ecr describe-repositories --repository-names $ECR_REPOSITORY || \
+            aws ecr create-repository --repository-name $ECR_REPOSITORY
+
+        - name: Push to Amazon ECR
+          run: |
+            docker build -t $ECR_REPOSITORY:${{ env.IMAGE_TAG }} .
+            docker tag $ECR_REPOSITORY:${{ env.IMAGE_TAG }} $ECR_REGISTRY/$ECR_REPOSITORY:${{ env.IMAGE_TAG }}
+            docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{ env.IMAGE_TAG }}
+
+        - name: Update Kubernetes deployment manifest
+          run: |
+            grep -q "image: $ECR_REGISTRY/$ECR_REPOSITORY" repoapp/prd/app.yaml \
+            && sed -i "s|image: $ECR_REGISTRY/$ECR_REPOSITORY:.*|image: $ECR_REGISTRY/$ECR_REPOSITORY:${{ env.IMAGE_TAG }}|" repoapp/prd/app.yaml \
+            || echo "image: $ECR_REGISTRY/$ECR_REPOSITORY:${{ env.IMAGE_TAG }}" >> repoapp/prd/app.yaml
+
+        - name: Commit and push changes
+          run: |
+            git config user.email "devops79@yahoo.com"
+            git config user.name "carina-pereira-devops"
+            git remote set-url origin https://oauth2:$ACCESS_TOKEN@github.com/carina-pereira-devops/devops
+            git add .
+            git commit -m "push pipe remota [skip ci]"
+            git push
+
+
