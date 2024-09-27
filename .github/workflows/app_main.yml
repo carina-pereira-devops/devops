@@ -2,7 +2,7 @@ name: CRIA A IMAGEM E ATUALIZA A TAG
 on:
     push:
         branches:
-            - master
+            - main
 permissions:
   id-token: write
   deployments: write
