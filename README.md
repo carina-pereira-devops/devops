@@ -71,8 +71,11 @@ Configuração da comunicação Git e AWS -> OpenId Connect Manualmente (Seguran
 Pipe Iac criando ArgoCd e Jaeger
 Pipe da Aplicação
 
-6 - ArgoCD  (Falta)
-Configuração e Deploy da Aplicação feita manualmente.
+6 - ArgoCD  (Finalizada)
+Configuração e Deploy da Aplicação feita manualmente. 
+A implementação do Argo CD em uma abordagem GitOps, tem o GitHub como única fonte de verdade.
+A implementação da mesma nesta primeira etapa, foi feita de forma manual, porém o entendimento e a escolha do recurso, bom como a finalidade denota uma boa prática no mundo devops.
+Na pipe da aplicação, conforme o código, é atualizada a TAG da imagem no manifesto kubernetes. Assim, com esta alteração, estando o Argo sincronizado com o repositório, o Argo realiza o rollout da aplicação, fazendo o deploy com a nova imagem.
 
 8 - Metricas/Jaeger (Entrega cancelada)
 Métricas
@@ -80,9 +83,11 @@ Métricas
 9 - Futuras funcionalidades:
 Configuração segura do "arquivo de estado" do terraform (terraform.tfstate), em um Bucket S3, para execução de pipes remotas e efetivas.
 Botões de Pipes Automatizados.
+Implementação dos recursos ArgoCD e Jaeger atraavés do Terraform.
 
 10 - Lições aprendidas / Questionamentos:
 
 - Em quatro dias parciais, minha maior dificuldade foi nas integrações, principalmente entre AWS e Git. Fiz uso do recurso de IA, porém, mesmo elaborando as questões de forma explícita e não genérica, o entendimento dos logs, me ajudou mais do que as informações trazidas pela IA, reforçando a idéia, que a IA necessita ser treinada da forma correta, e não necessariamente o ChatGPT por ter uma base de dados gigante como o Google seja tão efetivo assim.
 - Na construção da Infra, aproximadamente 12 min, a construção do Cluster EKS aconteceu com sucesso, em aproximadamente 10 min, porém a falha aconteceu na implementação do recurso de Observabilidade, em menos de 2 min. Nem sempre automatizar todos os recursos em um única esteira, é efetivo.
+- Excedi o uso de recursos em contas gratuítas Docker Hub e AWS
 
