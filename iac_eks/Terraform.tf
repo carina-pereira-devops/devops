@@ -1,12 +1,6 @@
-# Adpatação código HashiCorp - Providers
+# Adpatação código HashiCorp - Providers (todos estão sendo utilizados?)
 
 terraform {
-
-  # cloud {
-  #   workspaces {
-  #     name = "learn-terraform-eks"
-  #   }
-  # }
 
   required_providers {
     aws = {
