@@ -65,13 +65,18 @@ https://developer.hashicorp.com/terraform/tutorials/kubernetes/eks
 
 5 - CI CD com Git (Finalizado)
 
-Pipe IaC
+Pipe IaC --> Inputs
 Configuração da comunicação Git e AWS -> OpenId Connect Manualmente (Segurança)
+Armazenamento das Configurações de toda a Construção da Infra -> Bucket S3 Manualmente (versionamento habilitado)
 
 Pipe Iac criando ArgoCd e Jaeger
-Pipe da Aplicação
+Pipe da Aplicação -> Como já tive problemas com o repositório da aplicação ser migrado, com base na minha experiência,
+                     crio o repositório, junto com o IaC da Aplicação.
 
 6 - ArgoCD  (Finalizada)
+Ref.:
+https://blog.saintmalik.me/argocd-on-kubernetes-cluster/
+
 Configuração e Deploy da Aplicação feita manualmente. 
 A implementação do Argo CD em uma abordagem GitOps, tem o GitHub como única fonte de verdade.
 A implementação da mesma nesta primeira etapa, foi feita de forma manual, porém o entendimento e a escolha do recurso, bom como a finalidade denota uma boa prática no mundo devops.

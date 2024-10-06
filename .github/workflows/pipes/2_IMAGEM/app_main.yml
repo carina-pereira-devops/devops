@@ -1,8 +1,11 @@
+# Apenas para deploy (atualiza a imagem)
 name: CRIA A IMAGEM E ATUALIZA A TAG
 on:
     push:
         branches:
             - main
+
+# Configurações da AWS
 permissions:
   id-token: write
   deployments: write
@@ -14,7 +17,7 @@ permissions:
 jobs:
     Build:
       name: Build
-      runs-on: ubuntu-latest
+      runs-on: ubuntu-latest # SO
       
       env:
           ECR_REGISTRY: "535002861869.dkr.ecr.us-east-1.amazonaws.com" #${{ secrets.URL_AWS }}
@@ -41,6 +44,7 @@ jobs:
           id: login-ecr
           uses: aws-actions/amazon-ecr-login@v1
 
+        # Não será criado via IaC Terraform
         - name: Create ECR repository if it doesn't exist
           run: |
             aws ecr describe-repositories --repository-names $ECR_REPOSITORY || \
@@ -52,6 +56,7 @@ jobs:
             docker tag $ECR_REPOSITORY:${{ env.IMAGE_TAG }} $ECR_REGISTRY/$ECR_REPOSITORY:${{ env.IMAGE_TAG }}
             docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{ env.IMAGE_TAG }}
 
+        # Repo em sync com o Argo, Argo faz o rollout e sobe os Pods com a nova versão da imagem
         - name: Update Kubernetes deployment manifest
           run: |
             grep -q "image: $ECR_REGISTRY/$ECR_REPOSITORY" repoapp/prd/app.yaml \

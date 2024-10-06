@@ -55,6 +55,4 @@ jobs:
         run: cd iac &&
           terraform apply -auto-approve 
 
-# Evolução do Código ...
-
-# Terraform Destroy de acordo com o conceito de workflows do Terraform --> Processo Manual de escolha...
+# Em construção, após validação do código do EKS
