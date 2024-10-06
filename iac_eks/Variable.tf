@@ -13,7 +13,4 @@ variable "region" {
 #  default     = "devops-eks"
 #}
 
-# Backend
-variable "bucket_name" {
-  type = string
-}
+

@@ -133,8 +133,3 @@ module "eks" {
 #  role_policy_arns              = [data.aws_iam_policy.ebs_csi_policy.arn]
 #  oidc_fully_qualified_subjects = ["system:serviceaccount:kube-system:ebs-csi-controller-sa"]
 #}
-
-# S3 para guardar estado das configurações do Terraform (Backend)
-resource "aws_s3_bucket" "bucket" {
-  bucket = var.bucket_name
-}
