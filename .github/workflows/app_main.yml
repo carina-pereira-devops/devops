@@ -60,9 +60,9 @@ jobs:
 # Repo em sync com o Argo, Argo faz o rollout e sobe os Pods com a nova versão da imagem
         - name: Update Kubernetes deployment manifest
           run: |
-            grep -q "image: $ECR_REGISTRY/$ECR_REPOSITORY" repoapp/prd/app.yaml \
-            && sed -i "s|image: $ECR_REGISTRY/$ECR_REPOSITORY:.*|image: $ECR_REGISTRY/$ECR_REPOSITORY:${{ env.IMAGE_TAG }}|" repoapp/prd/app.yaml \
-            || echo "image: $ECR_REGISTRY/$ECR_REPOSITORY:${{ env.IMAGE_TAG }}" >> repoapp/prd/app.yaml
+            grep -q "image: $ECR_REGISTRY/$ECR_REPOSITORY" iac_app/prd/app.yaml \
+            && sed -i "s|image: $ECR_REGISTRY/$ECR_REPOSITORY:.*|image: $ECR_REGISTRY/$ECR_REPOSITORY:${{ env.IMAGE_TAG }}|" iac_app/prd/app.yaml \
+            || echo "image: $ECR_REGISTRY/$ECR_REPOSITORY:${{ env.IMAGE_TAG }}" >> iac_app/prd/app.yaml
 
 # Comitando e enviando a imagem para o repositório
         - name: Commit and push changes
