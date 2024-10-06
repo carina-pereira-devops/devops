@@ -36,12 +36,12 @@ module "vpc" {
   # Especifica az de acordo com o filtro anterior
   # azs  = slice(data.aws_availability_zones.available.names, 0, 3)
   
-  # Para este Laboratório apenas uma az (correto seria mais de uma por padrões de arquitetura (redundância)
-  azs             = ["us-east-1a"]
+  # Ajuste nas configurações para duas AZs (redundância)
+  azs             = ["us-east-1a", "us-east-1b"]
 
-  # Apenas uma AZ, apenas uma subnet pública e uma privada
-  private_subnets = ["10.0.1.0/24"]
-  public_subnets  = ["10.0.4.0/24"]
+  # Ajuste nas configurações para duas AZs (redundância)
+  private_subnets = ["10.0.1.0/24", "10.0.2.0/24"]
+  public_subnets  = ["10.0.3.0/24", "10.0.4.0/24"]
 
   enable_nat_gateway   = true
   
