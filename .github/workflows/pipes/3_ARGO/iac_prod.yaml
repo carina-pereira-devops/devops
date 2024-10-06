@@ -1,6 +1,11 @@
-name: "PROD"
+# Reutilização do Código para Deploy do Argo
+name: "ARGOCD-PRD"
 
-on: [push]
+# Commit na branch main
+on:
+  push:
+    branches:
+      - main
 
 # Configurações da AWS
 permissions:
@@ -11,10 +16,12 @@ permissions:
 jobs:
   terraform:
     uses: ./.github/workflows/iac_tf.yml
-    with: # variaveis que são obrigatórias para a execução da Pipe
-      environment: prod  
-      # Role do Argo
+    with: # variaveis que são obrigatórias para a execução da Pipe (considerando que tem Argo para ambiente de PRD e DEV)
+      environment: prd  
+      # Role do Devops
       aws-assume-role-arn: "arn:aws:iam::535002861869:role/github-carina-devops-pipe"
       aws-region: "us-east-1"
+      # Bucket para statefile do ARGO
+      aws-statefile-s3-bucket: "argo-s3-statefile" 
 
-# Em construção, após validação do código do EKS
+

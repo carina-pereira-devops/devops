@@ -34,8 +34,3 @@ resource "null_resource" "del-argo-pass" {
   }
 }
 
-# S3 para guardar estado das configurações do Terraform (Backend)
-resource "aws_s3_bucket" "bucket" {
-  bucket = var.bucket_name
-}
-

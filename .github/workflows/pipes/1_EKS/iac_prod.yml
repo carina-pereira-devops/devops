@@ -18,7 +18,8 @@ jobs:
     uses: ./.github/workflows/iac_tf.yml
     with: # variaveis que são obrigatórias para a execução da Pipe (etapas manuais)
       environment: prd # Workspace prd no mesmo bucket
-      # Role do EKS (Testar com a mesma de DevOps)
+      # Role do Devops
       aws-assume-role-arn: "arn:aws:iam::535002861869:role/github-carina-devops-pipe"      
       aws-region: "us-east-1"
-      aws-statefile-s3-bucket: "devops-s3-statefile" # validar 
+      # Bucket recebe as configurações antes da criação da Infra
+      aws-statefile-s3-bucket: "devops-s3-statefile" 

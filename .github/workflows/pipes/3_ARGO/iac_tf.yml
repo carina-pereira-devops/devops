@@ -1,58 +1,81 @@
+# Reusabilidade do código para ambientes
 name: "Terraform Workflow"
 
+# Variáveis obrigatórias para a execução (inputs)
 on:
   workflow_call:
     inputs:
       environment:
         type: string
         required: true
+      aws-region:
+        type: string
+        required: true        
       aws-assume-role-arn:
         type: string
         required: true
-      aws-region:
+      aws-statefile-s3-bucket:
         type: string
-        required: true
+        required: true        
 
 jobs:
   terraform:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest # definições de SO
     defaults:
       run:
         shell: bash
 
-    steps:
-      - name: Checkout code
+    steps: # Etapas de execução
+      - name: Checkout code      # Git
         uses: actions/checkout@v4
 
-      - name: Setup Terraform
+      - name: Setup Terraform    # Terraform
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.8.3
+          terraform_wrapper: false # Erro "Too many command line arguments. Did you mean to use -chdir?"
 
-      - name: Configure AWS credentials
+      - name: Configure AWS credentials  # AWS
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ inputs.aws-assume-role-arn }}
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: ${{ inputs.aws-region }}
 
-      - name: Terraform Init
+      - name: Read destroy configuration # Validação caso necessário deletar o ambiente (diretório dos artefatos do Argo)
+        id: read-destroy-config
         run: |
-          cd iac && terraform init \
+          DESTROY="$(jq -r '.${{ inputs.environment }}' ./iac_argo/destroy_config.json)" 
+          echo "destroy=$(echo $DESTROY)" >> $GITHUB_OUTPUT
 
-      - name: Terraform Validate
+      - name: Terraform Init   # Inicializando Terraform com algumas especificações  (diretório dos artefatos do Argo)
+        run: |
+          cd iac_argo && terraform init \
+            -backend-config="bucket=${{ inputs.aws-statefile-s3-bucket }}" \
+            -backend-config="key=${{ github.event.repository.name }}" \
+            -backend-config="region=${{ inputs.aws-region }}"            
+
+      - name: Terraform Validate # Validação código terraform
         run: terraform validate
 
-      - name: Terraform Plan
-        if: steps.read-destroy-config.outputs.destroy != 'true'
+      - name: Terraform Destroy  # De acordo com o que foi construído (diretório dos artefatos do Argo)
+        if: steps.read-destroy-config.outputs.destroy == 'true' # De acordo com a validação de destroy, se a flag "true" para o ambiente o destroy será feito
+        id: terraform-destroy
+        run: cd iac_argo &&
+          terraform workspace select ${{ inputs.environment }} || terraform workspace new ${{ inputs.environment }} &&
+          terraform destroy -var-file="./envs/${{ inputs.environment }}/terraform.tfvars" -auto-approve        
+
+      - name: Terraform Plan # StateFile diferente para cada Workspace  (diretório dos artefatos do Argo)
+        if: steps.read-destroy-config.outputs.destroy != 'true' # Só executa quando a opção de destruição não for verdadeira
         id: terraform-plan
-        run: cd iac &&
-          terraform plan 
+        run: cd iac_argo &&
+          terraform workspace select ${{ inputs.environment }} || terraform workspace new ${{ inputs.environment }} &&
+          terraform plan -var-file="./envs/${{ inputs.environment }}/terraform.tfvars" -out="${{ inputs.environment }}.plan"
 
-      - name: Terraform Apply
-        if: steps.read-destroy-config.outputs.destroy != 'true'
+      - name: Terraform Apply # Construção da infra de acordo com o planejamento por ambiente na etapa anterior (diretório dos artefatos do Argo)
+        if: steps.read-destroy-config.outputs.destroy != 'true' # Só executa quando a opção de destruição não for verdadeira
         id: terraform-apply
-        run: cd iac &&
-          terraform apply -auto-approve 
+        run: cd iac_argo &&
+          terraform workspace select ${{ inputs.environment }} || terraform workspace new ${{ inputs.environment }} &&
+          terraform apply "${{ inputs.environment }}.plan"
 
-# Em construção, após validação do código do EKS

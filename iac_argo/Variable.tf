@@ -1,15 +1,10 @@
-# Onde utilizamos o nome do Cluster? Qual a definição na IaC do EKS para cluster?
+# Validar se aqui referenciamos qual cluster EKS
 variable "eks-name" {
   type    = string
-  default = "my-cluster"
+  default = "devops-eks-hZbeMdvw" # validar
 }
 
 # Ainda não trabalhando efetivamente com ambiente no Argo?
 variable "env" {
   default = "staging"
-}
-
-# Backend
-variable "bucket_name" {
-  type = string
 }
