@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: python
-        image: 535002861869.dkr.ecr.us-east-1.amazonaws.com/dvps:20240927134929
+        image: 535002861869.dkr.ecr.us-east-1.amazonaws.com/dvps:20240927223640
         ports:
         - containerPort: 8000
 
