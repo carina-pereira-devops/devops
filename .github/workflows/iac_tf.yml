@@ -33,6 +33,7 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.8.3
+          terraform_wrapper: false # Erro "Too many command line arguments. Did you mean to use -chdir?"
 
       - name: Configure AWS credentials  # AWS
         uses: aws-actions/configure-aws-credentials@v4
