@@ -48,12 +48,12 @@ jobs:
           DESTROY="$(jq -r '.${{ inputs.environment }}' ./iac_eks/destroy_config.json)"
           echo "destroy=$(echo $DESTROY)" >> $GITHUB_OUTPUT
 
-      - name: Terraform Init  # Inicializando Terraform com algumas especificações
-        run: | 
-          cd iac_eks && terraform init \ 
-            -backend-config="bucket=${{ inputs.aws-statefile-s3-bucket }}" \          
+      - name: Terraform Init   # Inicializando Terraform com algumas especificações
+        run: |
+          cd iac_eks && terraform init \
+            -backend-config="bucket=${{ inputs.aws-statefile-s3-bucket }}" \
             -backend-config="key=${{ github.event.repository.name }}" \
-            -backend-config="region=${{ inputs.aws-region }}" 
+            -backend-config="region=${{ inputs.aws-region }}"            
 
       - name: Terraform Validate # Validação código terraform
         run: terraform validate

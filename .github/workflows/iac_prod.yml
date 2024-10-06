@@ -19,6 +19,6 @@ jobs:
     with: # variaveis que são obrigatórias para a execução da Pipe (etapas manuais)
       environment: prd # Workspace prd no mesmo bucket
       # Role do EKS (Testar com a mesma de DevOps)
-      aws-assume-role-arn: "arn:aws:iam::535002861869:role/github-carina-devops-pipe"
-      aws-statefile-s3-bucket: "devops-s3-statefile" # validar 
+      aws-assume-role-arn: "arn:aws:iam::535002861869:role/github-carina-devops-pipe"      
       aws-region: "us-east-1"
+      aws-statefile-s3-bucket: "devops-s3-statefile" # validar 
