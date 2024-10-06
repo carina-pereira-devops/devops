@@ -37,7 +37,7 @@ module "vpc" {
   # azs  = slice(data.aws_availability_zones.available.names, 0, 3)
   
   # Para este Laboratório apenas uma az (correto seria mais de uma por padrões de arquitetura (redundância)
-  azs             = ["us-east-1"]
+  azs             = ["us-east-1a"]
 
   # Apenas uma AZ, apenas uma subnet pública e uma privada
   private_subnets = ["10.0.1.0/24"]
