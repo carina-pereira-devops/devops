@@ -13,7 +13,7 @@ Automatizar o Deploy dos recursos de Monitoração. (Backlog)
 Estado Atual:
  Cluster EKS da Aplicação gerenciado pelo ArgoCD:
 
-imagens/resultado_final.png
+https://github.com/carina-pereira-devops/devops/blob/cda45bff905bbf3e7d0e2d6ad750e487296080f1/imagens/resultado_final.png
 
 Etapas:
 
