@@ -15,4 +15,4 @@ EXPOSE 8000
 
 # Comando de Inicialização
 WORKDIR /app
-CMD gunicorn --bind 0.0.0.0:8000 app:app --log-level debug
+CMD gunicorn --log-level debug api:app 
