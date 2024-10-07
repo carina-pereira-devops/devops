@@ -15,4 +15,4 @@ EXPOSE 8000
 
 # Comando de Inicialização
 WORKDIR /app
-ENTRYPOINT ["gunicorn" , "--bind","0.0.0.0:8000", "debug api:app"]
+ENTRYPOINT ["gunicorn" , "--bind","0.0.0.0:8000", "app:app"]
