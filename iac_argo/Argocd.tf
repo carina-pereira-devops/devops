@@ -15,7 +15,9 @@ resource "helm_release" "argocd" {
   version    = "6.7.11"
   timeout    = "1500"
   namespace  = kubernetes_namespace.argocd.id
-  values = [data.template_file.argo-values.rendered]
+  values = [
+    file("./argocd/install.yaml")
+  ]
 }
 
 # Resgatando credenciais, e enviando para a pasta iac_argo (.txt no gitignore)

@@ -76,6 +76,8 @@ Pipe da Aplicação -> Como já tive problemas com o repositório da aplicação
 6 - ArgoCD  (Finalizada)
 Ref.:
 https://blog.saintmalik.me/argocd-on-kubernetes-cluster/
+https://github.com/thilinajayanath/terraform-eks-argocd/
+
 
 Configuração e Deploy da Aplicação feita manualmente. 
 A implementação do Argo CD em uma abordagem GitOps, tem o GitHub como única fonte de verdade.
