@@ -17,5 +17,9 @@ terraform {
       version = "= 2.5.1"
     }
   }
-
+}
+provider "helm" {
+  kubernetes {
+    config_path = "~/.kube/config"
+  }
 }
