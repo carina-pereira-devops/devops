@@ -1,11 +1,11 @@
 ####################################  ARGOCD ####################################
 
-# Namespace
-resource "kubernetes_namespace" "argocd" {
-  metadata {
-    name = "argocd"
-  }
-}
+## Namespace
+#resource "kubernetes_namespace" "argocd" {
+#  metadata {
+#    name = "argocd"
+#  }
+#}
 
 # Implementação do Helm
 resource "helm_release" "argocd" {
@@ -14,7 +14,7 @@ resource "helm_release" "argocd" {
   repository = "https://argoproj.github.io/argo-helm"
   version    = "6.7.11"
   timeout    = "1500"
-  namespace  = kubernetes_namespace.argocd.id
+  namespace  = "argocd"
   values = [
     file("./argocd/install.yaml")
   ]
