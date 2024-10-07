@@ -1,12 +1,19 @@
 Projeto DevOps:
 
 Objetivos:
-Criar toda a estrutura com o terraform, incluindo o ECR para hospedar a imagem da aplicação, através da Pipe IaC no Git.
- - Repo com os artefatos disponibilizados para a equipe de Finops/Engenharia.
-Criar o fluxo de Deploy para o ArgoCd sendo o Git a única fonte de verdade.
- - Repo com os artefatos disponibilizados para a equipe de DevOps.
-Criar o fluxo de Deploy para a Aplicação.
- - Repo com os artefatos disponibilizados para a equipe de Sustentação.
+Automatizar a criação da infraestrutura que hospeda as aplicações com o Terraform, através do processo CI CD através do Git.
+ - Somente a equipe de Engenharia tem acesso a este repositório.
+Automatizar a implementação do ArgoCd tendo o Git como a única fonte de verdade. (Backlog)
+ - Somente a equipe de DevOps tem acesso a este repositório.
+Automatizar o Deploy da Aplicação.
+ - Repositório com os artefatos disponibilizados para a equipe de Sustentação.
+Automatizar o Deploy dos recursos de Monitoração. (Backlog)
+ - Repositório com os artefatos disponibilizados para a equipe de Observabilidade.
+
+Estado Atual:
+ Cluster EKS da Aplicação gerenciado pelo ArgoCD:
+
+*
 
 Etapas:
 
