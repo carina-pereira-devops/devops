@@ -32,7 +32,7 @@ virt-install --name=devops \
              --graphics vnc,keymap=pt-br \
              --noautoconsole
 
-<img src="https://github.com/carina-pereira-devops/devops/blob/cda45bff905bbf3e7d0e2d6ad750e487296080f1/imagens/virtmng.png" alt="KVM">
+<img src="https://github.com/carina-pereira-devops/devops/blob/b5b6931fdd8f8742b2c3dd1bdb434a14355e5db1/imagens/virtmng.png" alt="KVM">
 
 2 - Instalação configuração do Git, com repositório local sincronizado com o Github através de chaves SSH. (Finalizado)
 
