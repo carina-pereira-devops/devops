@@ -89,7 +89,8 @@ Com esta alteração, estando o Argo sincronizado com o repositório, o Argo rea
 Implementação manual de acordo com a documentação: 
 https://archive.eksworkshop.com/intermediate/290_argocd/install/
 
-<img src="https://github.com/carina-pereira-devops/devops/blob/cda45bff905bbf3e7d0e2d6ad750e487296080f1/imagens/doc.png" alt="Git">
+
+<img src="[https://github.com/carina-pereira-devops/devops/blob/c348e272f372e28e19e7815101da8228b695821d/imagens/doc.png" alt="Git">
 
 A implementação do Argo CD em uma abordagem GitOps, tem o GitHub como única fonte de verdade.
 
