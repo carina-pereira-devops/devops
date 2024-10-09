@@ -1,4 +1,6 @@
-Projeto DevOps:
+<H2>Projeto DevOps:</H2>
+
+
 
 Objetivos - Automatizar o ambiente corporativo que hospeda uma aplicação em Python:
 
@@ -16,7 +18,11 @@ Estado Atual:
 
 <img src="https://github.com/carina-pereira-devops/devops/blob/cda45bff905bbf3e7d0e2d6ad750e487296080f1/imagens/resultado_final.png" alt="ArgoCD">
 
+
+
 Etapas:
+
+
 
 1 - Provisionamento do ambiente local de desenvolvimento do código do Terraform em uma VM (KVM), com as configurações necessárias para evitar conflitos: (Finalizado)
 
@@ -34,15 +40,22 @@ virt-install --name=devops \
 
 <img src="https://github.com/carina-pereira-devops/devops/blob/b5b6931fdd8f8742b2c3dd1bdb434a14355e5db1/imagens/virtmng.png" alt="KVM">
 
-2 - Instalação e configuração do Git, com repositório local (vm de desenvolvimento) sincronizado com através de chaves SSH. (Finalizado)
+
+
+2 - Instalação e configuração do Git, com repositório local (vm de desenvolvimento) sincronizado através de chaves SSH: (Finalizado)
 
 <img src="https://github.com/carina-pereira-devops/devops/blob/3fe9e249c8982657a2f14960176f986758c47629/imagens/git.png" alt="Git">
 
 Obs.: No final desta etapa os repositórios do Git (local e remoto) já se encontram sincronizados.
 
+
+
 3 - Instalaçao das dependências da aplicação na VM de desenvolvimento e inicialização da mesma: (Finalizado)
+
 pip install -r requirements.txt
+
 gunicorn --log-level debug api:app
+
 
 Teste local da aplicação realizado com sucesso:
 
@@ -70,13 +83,17 @@ curl -sv localhost:8000/api/comment/new -X POST -H 'Content-Type: application/js
 }
 * Closing connection 0
 
+
+
 4 - Adaptação da Documentação da Hashicorp/Terraform para EKS: (Finalizado)
 https://developer.hashicorp.com/terraform/tutorials/kubernetes/eks 
 
 - Instalação, configuração e teste com sucesso do Terraform na vm de desenvolvimento, para testes.
 - Instalação, configuração e teste com sucesso do AWSCLI para interação na AWS, na vm de desenvolvimento.
 
-5 - CI CD com Git (Finalizado)
+
+
+5 - CI CD com Git: (Finalizado)
 
 Exemplo de configurações manuais necessárias para a automação:
 
@@ -97,7 +114,9 @@ Ambiente criado com Terraform, através da pipeline (1_EKS):
 Na pipeline de deploy da aplicação (2_IMAGEM), conforme o código, é atualizada a TAG da imagem no manifesto kubernetes. 
 Com esta alteração, estando o Argo sincronizado com o repositório, o Argo realiza o rollout da aplicação, fazendo o deploy com a nova imagem.
 
-6 - ArgoCD  (Finalizada)
+
+
+6 - Implementação ArgoCD:  (Finalizada)
 Implementação manual de acordo com a documentação: 
 https://archive.eksworkshop.com/intermediate/290_argocd/install/
 
@@ -105,22 +124,33 @@ https://archive.eksworkshop.com/intermediate/290_argocd/install/
 
 A implementação do Argo CD em uma abordagem GitOps, tem o GitHub como única fonte de verdade.
 
+
+
 7 - Evidências da Aplicação em um cluster EKS:
 
 Kubernetes:
 
-<img src="https://github.com/carina-pereira-devops/devops/blob/cda45bff905bbf3e7d0e2d6ad750e487296080f1/imagens/k8s.png" alt="K8S">
+<img src="https://github.com/carina-pereira-devops/devops/blob/9dfa14b57d236dfe7ebd71cb402cb871ad2f2415/imagens/k8s.png" alt="K8S">
 
 Toda a criação está devidamente documentada em "statefile" do Terraform, em um bucket S3:
 
 <img src="https://github.com/carina-pereira-devops/devops/blob/3fe9e249c8982657a2f14960176f986758c47629/imagens/stf2.png" alt="TF">
 
-8 - (Backlog) Metricas/Jaeger 
+
+
+8 - Metricas/Jaeger: (Backlog) 
+
 Métricas da Aplicação.
 
-9 - Futuras funcionalidades:
+
+
+9 - Futuras funcionalidades: (Backlog) 
+
 "Botões" Automatizados para as pipelines.
+
 Implementação dos recursos ArgoCD e Jaeger através do Terraform.
+
+
 
 10 - Lições aprendidas / Questionamentos:
 
